@@ -1,6 +1,9 @@
 const tablero = document.getElementById('containerCells')
 const cuadrados = document.querySelectorAll('.cell')
-const jugador = ['X']
+const contador = document.getElementById('contadorPuntos')
+let puntosJ = 0
+let puntosC = 0
+const jugador = 'X'
 const computadora = ['O']
 const boton = document.getElementById('ceviche')
 const mensaje = document.createElement ('h2')
@@ -20,12 +23,14 @@ const vicCondicion = [
     [2, 4, 6]
 ]
 
-mensaje.textContent = "turno de X"
+
 mensaje.style.marginTop = '30px'
 mensaje.style.textAlign='center'
 tablero.after(mensaje)
 
-
+function contador() {
+    
+}
 
 function verificarVictoria() {
     for (let i = 0; i < vicCondicion.length; i++) {
@@ -38,6 +43,8 @@ function verificarVictoria() {
     }
     return false
 }
+
+
 
 function verificarVictoriaIA() {
     for (let i = 0; i < vicCondicion.length; i++) {
@@ -53,8 +60,10 @@ function verificarVictoriaIA() {
 }
 
 function verificarEmpate(){
-    if (filtrado.length === 0 && !verificarVictoria && !verificarVictoriaIA) {
-        mensaje.textContent = 'empate'
+    if (filtrado.length == 0) {
+        if(!verificarVictoria() && !verificarVictoriaIA()){
+            mensaje.textContent = 'empate'
+        }
     }
 }
 
@@ -63,7 +72,7 @@ function Reseteo() {
     for(let i = 0; i < cuadrados.length; i++) {
         cuadrados[i].innerHTML = ''
     }
-    mensaje.textContent='turno de X'
+    mensaje.textContent=''
     
 }
 
@@ -75,14 +84,12 @@ cuadrados.forEach(element => {
         
         if (element.innerHTML === '') {
             if (turno) {
+                
                 element.innerHTML = jugador
                 random();
                 console.log(verificarVictoria())  
                 console.log(filtrado.length);
                 console.log(verificarEmpate());
-                
-                //console.log(verificarEmpate());
-                
             }
         }
         turno = !turno
@@ -99,7 +106,6 @@ function random(){
     if (filtrado.length > 0) {
         filtrado[indice].innerHTML = computadora
         console.log(verificarVictoriaIA());
-        //console.log(indice);
     }
 }
 

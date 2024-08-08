@@ -17,6 +17,13 @@ body{
 
 /*fin de la zona de ajustes generales*/
 
+.ceviche{
+    display: block;
+    margin: 40px auto;
+}
+
+
+
 /*zona de estilos de las celdas*/
 
 #containerCells{
