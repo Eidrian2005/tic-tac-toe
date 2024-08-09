@@ -9,8 +9,7 @@ const boton = document.getElementById('ceviche')
 const mensaje = document.createElement ('h2')
 let turno = true
 let filtrado;
-
-
+let juegoTerminado = false;
 
 const vicCondicion = [
     [0, 1, 2],
@@ -23,13 +22,15 @@ const vicCondicion = [
     [2, 4, 6]
 ]
 
-
 mensaje.style.marginTop = '30px'
 mensaje.style.textAlign='center'
 tablero.after(mensaje)
 
-function contador() {
-    
+actualizarContador()
+function actualizarContador() {
+    contador.textContent = `Jugador X: ${puntosJ} - Jugador O: ${puntosC}`;
+    contador.style.marginTop = '50px'
+    contador.style.textAlign = 'center'
 }
 
 function verificarVictoria() {
@@ -38,6 +39,9 @@ function verificarVictoria() {
         const [a,b,c] = vicCondicion[i]
         if (cuadrados[a].innerHTML == jugador && cuadrados[b].innerHTML == jugador && cuadrados[c].innerHTML == jugador) {
                 mensaje.textContent = 'Jugador X ha ganado'
+                puntosJ++;
+                actualizarContador()
+                juegoTerminado = true;
                 return true
         }
     }
@@ -51,8 +55,10 @@ function verificarVictoriaIA() {
         console.log(vicCondicion[i])
         const [a,b,c] = vicCondicion[i]
         if (cuadrados[a].innerHTML == computadora && cuadrados[b].innerHTML == computadora && cuadrados[c].innerHTML == computadora) {
-
             mensaje.textContent = 'Jugador O ha ganado'
+            puntosC++;
+            actualizarContador()
+            juegoTerminado = true;
             return true
         }
     }
@@ -63,6 +69,7 @@ function verificarEmpate(){
     if (filtrado.length == 0) {
         if(!verificarVictoria() && !verificarVictoriaIA()){
             mensaje.textContent = 'empate'
+            juegoTerminado = true;
         }
     }
 }
@@ -73,7 +80,7 @@ function Reseteo() {
         cuadrados[i].innerHTML = ''
     }
     mensaje.textContent=''
-    
+    juegoTerminado = false;
 }
 
 
@@ -82,14 +89,13 @@ function Reseteo() {
 cuadrados.forEach(element => {
     element.addEventListener("click",()=>{
         
-        if (element.innerHTML === '') {
+        if ( !juegoTerminado && element.innerHTML === '') {
             if (turno) {
-                
-                element.innerHTML = jugador
+                element.innerHTML = jugador;
+                if (verificarVictoria()) return;
                 random();
-                console.log(verificarVictoria())  
-                console.log(filtrado.length);
-                console.log(verificarEmpate());
+                if (verificarVictoriaIA()) return;
+                verificarEmpate();
             }
         }
         turno = !turno
@@ -105,11 +111,5 @@ function random(){
 
     if (filtrado.length > 0) {
         filtrado[indice].innerHTML = computadora
-        console.log(verificarVictoriaIA());
     }
 }
-
-
-
-
-
