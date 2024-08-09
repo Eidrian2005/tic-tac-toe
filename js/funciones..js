@@ -1,8 +1,8 @@
 const tablero = document.getElementById('containerCells')
 const cuadrados = document.querySelectorAll('.cell')
 const contador = document.getElementById('contadorPuntos')
-let puntosJ = 0
-let puntosC = 0
+let puntosJ = localStorage.getItem("puntosJ") || 0
+let puntosC = localStorage.getItem("puntosC") || 0
 const jugador = 'X'
 const computadora = ['O']
 const boton = document.getElementById('ceviche')
@@ -40,6 +40,7 @@ function verificarVictoria() {
         if (cuadrados[a].innerHTML == jugador && cuadrados[b].innerHTML == jugador && cuadrados[c].innerHTML == jugador) {
                 mensaje.textContent = 'Jugador X ha ganado'
                 puntosJ++;
+                localStorage.setItem("puntosJ", puntosJ)
                 actualizarContador()
                 juegoTerminado = true;
                 return true
@@ -57,6 +58,7 @@ function verificarVictoriaIA() {
         if (cuadrados[a].innerHTML == computadora && cuadrados[b].innerHTML == computadora && cuadrados[c].innerHTML == computadora) {
             mensaje.textContent = 'Jugador O ha ganado'
             puntosC++;
+            localStorage.setItem("puntosC", puntosC)
             actualizarContador()
             juegoTerminado = true;
             return true
