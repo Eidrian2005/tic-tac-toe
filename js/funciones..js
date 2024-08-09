@@ -5,7 +5,7 @@ let puntosJ = localStorage.getItem("puntosJ") || 0
 let puntosC = localStorage.getItem("puntosC") || 0
 const jugador = 'X'
 const computadora = ['O']
-const boton = document.getElementById('ceviche')
+const boton = document.getElementById('btnReiniciar')
 const mensaje = document.createElement ('h2')
 let turno = true
 let filtrado;
